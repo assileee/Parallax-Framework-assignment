@@ -1,3 +1,4 @@
+// src/components/ContactComp.tsx
 import { useState } from "react";
 import styles from "./ContactComp.module.scss";
 import { FaPhone } from "react-icons/fa6";
@@ -15,39 +16,34 @@ const ContactComp = () => {
     email: "",
     message: "",
   });
-
   const [error, setError] = useState<string>("");
 
   const checkForm = () => {
-    // check empty
     if (!formData.name || !formData.email || !formData.message) {
       setError("Please fill out all fields");
       return false;
     }
-
-    // check email format
-    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       setError("Please enter a valid email");
       return false;
     }
-
     return true;
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!checkForm()) {
-      // trigger shake + reset error after delay
-      setTimeout(() => setError(""), 2100);
+      setTimeout(() => setError(""), 2100); // allow shake to replay
       return;
     }
-    console.log(formData);
+    // TODO: send form data (EmailJS/fetch/etc.)
+    console.log("Form submitted:", formData);
     setFormData({ name: "", email: "", message: "" });
   };
 
   return (
     <section className={styles.contact}>
-      {/* ===== CONTACT FORM ===== */}
+      {/* LEFT: form */}
       <form onSubmit={handleSubmit}>
         <h2>Contact Us</h2>
         <p>
@@ -64,6 +60,7 @@ const ContactComp = () => {
             type="text"
             placeholder="Name"
           />
+
           <input
             value={formData.email}
             onChange={(e) =>
@@ -72,6 +69,7 @@ const ContactComp = () => {
             type="email"
             placeholder="Email"
           />
+
           <textarea
             value={formData.message}
             onChange={(e) =>
@@ -80,6 +78,7 @@ const ContactComp = () => {
             placeholder="Message"
             id="message-body"
           />
+
           <button
             type="submit"
             className={error ? styles.shakeHorizontal : undefined}
@@ -91,7 +90,7 @@ const ContactComp = () => {
         </div>
       </form>
 
-      {/* ===== CONTACT INFO ===== */}
+      {/* RIGHT: contact info card */}
       <article className={styles["contact-info"]}>
         <h2>Contact Info</h2>
 

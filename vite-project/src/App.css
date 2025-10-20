@@ -1,9 +1,5 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+/* Removed all the default Vite styles that were causing issues */
+/* If you need these styles, apply them to specific components, not #root */
 
 .logo {
   height: 6em;

@@ -2,10 +2,16 @@
 @use "../sass/mixins" as *;
 
 .contact {
-  background-color: #f2f2f2;
-  min-height: 90dvh;
+    background: linear-gradient(
+      to bottom,
+      #0b1936 0%,     // dark blue from hero
+      #f2f2f2 20%     // transitions into light grey
+    );
+    transition: background 0.6s ease-in-out;
+  min-height: 90vh; /* Changed from 90dvh to 90vh */
   padding: 2rem 1.25rem;
-  margin-top: 1rem;
+  margin-top: 0; /* Removed the 1rem margin that was adding space */
+  margin-bottom: 0; /* Ensure no bottom margin */
   position: relative;
   z-index: 5;
   display: flex;
@@ -86,17 +92,17 @@
     color: white;
     overflow: hidden;
 
-    /* Shortened violet stripe */
+    /* Violet stripe */
     &::before {
       content: "";
       position: absolute;
-      width: 90px;
-      height: 100%; // fixed height, no overflow
-      top: 0;
+      top:0;
       right: 0;
-      background-color: #414068;
+      width: 90px;
+      height: 100%;
+      background-color: $tertiary-color;
       z-index: 0;
-      border-radius: 0 16px 16px 0; // follow the box curve
+      border-radius: 0 16px 16px 0;
     }
 
     > * {
@@ -124,12 +130,22 @@
       gap: 0.5em;
     }
 
-    /* make sure paragraph text stays white */
     p {
-      color: white;
+      color: white; // fixed: same as Contact Info
       line-height: 1.5;
       margin-top: 0.5em;
     }
+  }
+
+  /* === RESPONSIVE === */
+  @include mobile-large {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  @include mobile-medium {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -139,13 +155,21 @@
 }
 
 @keyframes shake-horizontal {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-7px);
   }
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     transform: translateX(7px);
   }
 }

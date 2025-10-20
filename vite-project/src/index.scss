@@ -13,6 +13,29 @@
 
 html {
 	scroll-behavior: smooth;
+	height: 100%;
+	overflow-x: hidden;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #0b1936; /* matches the hero's dark blue */
+	min-height: 100%;
+	overflow-x: hidden;
+	/* Prevent overscroll bounce on mobile */
+	overscroll-behavior-y: none;
+}
+
+/* CRITICAL: Remove all padding and constraints from root */
+#root {
+	margin: 0;
+	padding: 0;
+	max-width: none;
+	width: 100%;
+	min-height: 100vh;
+	position: relative;
+	overflow: hidden;
 }
 
 h1,
@@ -25,18 +48,26 @@ h6 {
 }
 
 :root {
-	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	color-scheme: light;
+	color: #0c1a39;            /* default text color for light sections */
+	background-color: #0b1936;  /* same dark blue as the hero's bottom */
 	line-height: 1.5;
 	font-weight: 400;
-
-	color-scheme: light dark;
-	color: rgba(255, 255, 255, 0.87);
-	background-color: #242424;
-
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+section {
+	backface-visibility: hidden;
+	transform: translateZ(0);
+}
+
+/* Ensure last element has no margin */
+body > *:last-child,
+#root > *:last-child {
+	margin-bottom: 0 !important;
 }
 
 .btn {

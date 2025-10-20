@@ -1,137 +1,146 @@
 @use "../sass/variables" as *;
-@use "../sass/mixins" as *;
 
-/* Scene container */
+/* Desktop baseline (full-screen) */
 .scene {
   background-color: $primary-color-alt;
-  height: 100dvh;
+  height: 117vh; 
+  width: 100vw;                 
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   inset: 0;
   overflow: hidden;
-  max-width: 1440px;
-  margin: auto;
+  margin-bottom: 0;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    pointer-events: none;
+    margin-bottom: -150px;
+    background: linear-gradient(to bottom, $primary-color-alt 50%, $tertiary-color-alt);
+    z-index: 5;
+  }
 
-  /* ===== MOONLIGHT (halo) ===== */
+
   .moonLight {
-    width: max(190px, 12vw);
-    height: max(190px, 12vw);
+    width: 17vw;
+    height: 17vw;
     background-color: #ffffff66;
     border-radius: 50%;
     position: fixed;
     top: 8%;
-    right: 0%;
+    right: 12%;
     z-index: 0;
-    transform-style: preserve-3d;
     filter: blur(42px);
     pointer-events: none;
-
-    @include mobile-small  { right: 4%; }
-    @include mobile-medium { right: 3%; }
   }
 
-  /* ===== MOON ===== */
   .moon {
-    width: max(99px, 13vw);
-    height: max(99px, 13vw);
-    background-color: #fff;
+    width: 12vw;
+    height: 12vw;
+    background: #fff;
     border-radius: 50%;
     position: fixed;
-    top: 16%;
-    right: 8%;
-    z-index: 0;
+    top: 10%;
+    right: 14%;
+    z-index: 1;
     filter: blur(1px);
-    box-shadow: 0 0 32px 4px #ffffff; /* optional glow */
+    box-shadow: 0 0 32px 4px #ffffff;
     pointer-events: none;
-
-    @include mobile-small  { right: 6%; }
-    @include mobile-medium { right: 4%; }
   }
 
-  /* ===== BACKGROUND MOUNTAINS (png) ===== */
   .bg {
     position: fixed;
     z-index: 0;
-    width: 110%;
-    bottom: calc(1px + 16dvh);
-    left: -3%;
+    width: 120vw;
+    left: -6%;
+    bottom: 28dvh;          /* raised band like figma */
     pointer-events: none;
-
-    @include mobile-small  { bottom: calc(1px + 22dvh); }
-    @include mobile-medium { bottom: calc(1px + 28dvh); }
-    @include mobile-large  { bottom: calc(1px + 24dvh); }
   }
 
-  /* ===== LAKE ===== */
   .lake {
     position: fixed;
     z-index: 1;
-    width: 120%;
-    bottom: 0;
+    width: 100vw;           /* full width */
     left: 0;
+    bottom: 0;
     pointer-events: none;
-
-    @include mobile-small  { width: 115%; }
-    @include mobile-medium { width: 110%; }
   }
 
-  /* ===== HOUSE ===== */
-  .house {
+  .nearMountainsLeft {
     position: fixed;
     z-index: 2;
-    width: clamp(220px, 32vw, 460px);
-    left: 4%;
-    bottom: clamp(12dvh, 18dvh, 22dvh);
+    bottom: 0;
+    width: 22vw;            /* slimmer */
+    left: 0;
     pointer-events: none;
-
-    @include mobile-small  { left: 6%; }
-    @include mobile-medium { left: 8%; }
   }
 
-  /* ===== TITLE ===== */
-  .title {
-    position: fixed;
-    z-index: 3;
-    top: calc(40dvh - 60px);
-    right: 2%;
-    text-align: end;
-    transform-style: preserve-3d;
-    text-shadow: 1px 1px 1px #000;
-    font-family: "MedievalSharp", cursive;
-    font-size: 56px;
-    line-height: 1;
-    color: #fff;
-
-    @include mobile-small  { top: calc(44dvh - 60px); }
-    @include mobile-medium { font-size: 64px; }
-    @include mobile-large  { font-size: 72px; }
-  }
-
-  /* ===== FOREGROUND TREE/BRANCHES ===== */
-  .tree {
-    position: fixed;
-    z-index: 4;
-    width: clamp(420px, 72vw, 1100px);
-    top: -2%;
-    right: -2%; /* “more to the right” */
-    pointer-events: none;
-
-    @include mobile-small  { right: -1%; }
-    @include mobile-medium { right: 0; }
-  }
-
-  /* (Optional) near mountains if you import them */
-  .nearMountainsLeft,
   .nearMountainsRight {
     position: fixed;
     z-index: 2;
     bottom: 0;
-    width: 52vw;
+    width: 14vw;            /* slimmer */
+    right: 0;
     pointer-events: none;
   }
-  .nearMountainsLeft  { left: 0; }
-  .nearMountainsRight { right: 0; }
+  .blossoms {
+    position: fixed;
+    z-index: 3;           /* above house but below title */
+    width: 50vw;          /* tweak if needed */
+    left: -6%;              /* anchor on left edge */
+    top: -3%;
+    /* Removed bottom: 1000dvh - this was the main issue! */
+    pointer-events: none;
+  }
+
+  .house {
+    position: fixed;
+    z-index: 3;
+    width: 34vw;            /* stronger presence */
+    left: 20%;              /* nudge right */
+    bottom: 30dvh;          /* lift above lake */
+    pointer-events: none;
+  }
+  .upCloseTrees {
+    position: fixed;
+    z-index: 4;          
+    width: 10vw;        
+    bottom: 0;  /* Changed from 1000dvh to 0 - this was causing huge space! */     
+    pointer-events: none;
+  }
+  
+  .title {
+    position: fixed;
+    z-index: 4;
+    right: 10%;
+    top: 22dvh;
+    text-align: left;
+    font-family: "MedievalSharp", cursive;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    line-height: 0.95;
+    font-size: clamp(56px, 7vw, 96px);
+    pointer-events: none;
+  }
+}
+
+/* Large screens: keep proportions; only subtle guards */
+@media (min-width: 1600px) {
+  .scene {
+    .bg { width: 118vw; left: -1%; bottom: 44dvh; }
+    .lake { width: 100vw; left: 0; }                /* DO NOT shrink */
+    .nearMountainsLeft { width: 23vw; left:5%;}
+    .nearMountainsRight { width: 20vw; }
+    .house { width: 32vw; left: 15%; bottom: 40dvh; }
+    .blossoms { width: 65vw; left:-4%; top: -4%; }
+    .moon { width: 11vw; height: 11vw; }
+    .moonLight { width: 16vw; height: 16vw; }
+    .upCloseTrees { width: 140%; left: -10%; bottom: -5dvh;}
+  }
 }
